@@ -70,14 +70,26 @@ func SetZmq(typ string, endpoint string, bind bool, subscrib string) (JsSocket, 
 func (z JsSocket) Start() {
 	if z.RecQueue != nil {
 		go func() {
-			z.recData()
 			defer z.socket.Close()
+			//defer func() {
+			//	if e := recover(); e != nil {
+			//		fmt.Println(e)
+			//	}
+			//	z.socket.Close()
+			//}()
+			z.recData()
 		}()
 	}
 	if z.SendQueue != nil {
 		go func() {
-			z.sendData()
 			defer z.socket.Close()
+			//defer func() {
+			//	if e := recover(); e != nil {
+			//		fmt.Println(e)
+			//	}
+			//	z.socket.Close()
+			//}()
+			z.sendData()
 		}()
 	}
 }
@@ -102,6 +114,7 @@ func (z JsSocket) sendData() {
 			_, err := z.socket.SendMessage(val)
 			if err != nil {
 				fmt.Println(err)
+				//panic(err)
 				break
 			}
 		}
@@ -116,6 +129,7 @@ func (z JsSocket) recData() {
 		item, err := z.socket.RecvMessageBytes(0)
 		if err != nil {
 			fmt.Println(err)
+			//panic(err)
 			break
 		}
 		z.RecQueue <- item
