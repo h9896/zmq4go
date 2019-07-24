@@ -1,0 +1,2 @@
+go test -v -cover=true -coverprofile=test.out jsunzmq_test.go jsunzmq.go
+go tool cover -html=test.out -o test_result.html
