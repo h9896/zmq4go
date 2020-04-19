@@ -5,6 +5,7 @@ import (
 	"time"
 )
 
+// Record - record data
 func Record(msg string) {
 	t := time.Now()
 	fmt.Printf("%s->%s", t.Format("2006/01/02-15:04:05.000"), msg)
